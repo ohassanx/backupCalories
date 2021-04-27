@@ -37,7 +37,7 @@ class _CalorieCountState extends State<CalorieCount> {
     super.initState();
     updateBoolean();
     getUid();
-    _pieData = List<charts.Series<PieData, String>>();
+    _pieData = <charts.Series<PieData, String>>[];
   }
 
   Future<String> getUid() async {

@@ -1,3 +1,4 @@
+import 'package:audio_fit/models/activity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,9 @@ class Progress extends StatefulWidget {
 }
 
 class _ProgressState extends State<Progress> {
-  final AuthService _auth = AuthService();
   final FirebaseAuth auth = FirebaseAuth.instance;
   bool loading = true;
-
   String userId = "";
-
   void initState() {
     super.initState();
     getUid();
@@ -50,9 +48,10 @@ class _ProgressState extends State<Progress> {
             .doc(userId)
             .snapshots(),
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          var target;
+          var target, outTarget;
           if (snapshot.hasData) {
             target = snapshot.data['kcalIntakeTarget'];
+            outTarget = snapshot.data['kcalOutputTarget'];
           } else {
             target = 2000;
           }
@@ -93,10 +92,10 @@ class _ProgressState extends State<Progress> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),
-                            StreamProvider<List<Food>>.value(
-                              value: DatabaseService(id: userId).allFoods,
+                            StreamProvider<List<Activity>>.value(
+                              value: DatabaseService(id: userId).activities,
                               initialData: [],
-                              child: CalorieCount(calorieTarget: target),
+                              child: CalorieCount(calorieTarget: outTarget),
                             )
                           ],
                         ),

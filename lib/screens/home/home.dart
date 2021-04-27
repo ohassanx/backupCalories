@@ -1,3 +1,4 @@
+import 'package:alan_voice/alan_voice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_fit/screens/home/settings_page.dart';
@@ -40,8 +41,15 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getUid();
+    // setupAlan();
     print("initState date = " + widget.date.toString());
     newDate = globals.newDateSelected;
+  }
+
+  setupAlan() {
+    AlanVoice.addButton(
+        "b23c22fa051d81b47d43485dbc3cb44a2e956eca572e1d8b807a3e2338fdd0dc/stage",
+        buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
   }
 
   Future<String> getUid() async {
